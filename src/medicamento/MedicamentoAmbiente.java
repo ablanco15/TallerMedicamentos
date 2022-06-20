@@ -5,51 +5,48 @@
  */
 package medicamento;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.Iterator;
 
 /**
  *
  * @author LAB_ING
  */
 public class MedicamentoAmbiente extends Medicamento {
-    private String lugaresNoAlmacenables[];
+    ArrayList<String> lugaresNoAlmacenables;    
     
-
+ 
     public MedicamentoAmbiente( String codigo, String nombre, int costoEmpresa, int precioPublico, int unidades, int mesDeVencvimiento, int anoDeVencvimiento, int numeroDeLote, int vigencia) {
         super(codigo, nombre, costoEmpresa, precioPublico, unidades, mesDeVencvimiento, anoDeVencvimiento, numeroDeLote, vigencia);
-        lugaresNoAlmacenables= new String[]{"cocina","baño","sala"};
+        lugaresNoAlmacenables= new ArrayList<>();
                 
     }
-
-    public String[] getLugaresNoAlmacenables() {
-        return lugaresNoAlmacenables;
+  
+    public MedicamentoAmbiente() {
+        lugaresNoAlmacenables = new ArrayList<>();
     }
-
-    public void setLugaresNoAlmacenables(String[] lugaresNoAlmacenables) {
-        this.lugaresNoAlmacenables = lugaresNoAlmacenables;
-    }
-    
     @Override
     public void comprarMedicamento(){
        
    }
-
-    public MedicamentoAmbiente() {
-        lugaresNoAlmacenables = new String[]{};
-    }
-
+    
     @Override
     public void leerDatos(String nombre){
         boolean continuarCiclo=true;
-        int contador=0;
-        int opcion=0;
+        int contador = 0;
+        int opcion = 0;
+        String lugar = ""; 
         super.leerDatos(nombre);
+        in.nextLine();
         do{//mientras hayan menos de 3 lugares que no se pueden almacenar se repie el ciclo
             //luego cuando hay mas 3 o mas se le pregunta si desean agregar otros lugares
-            System.out.println("Lugar donde no se puede almacenar");//agregar parametro donde solo pueden ser caracteres
-            lugaresNoAlmacenables[contador]=in.nextLine();
+            System.out.println("Indicar un lugar donde no se puede almacenar el medicamento");//agregar parametro donde solo pueden ser caracteres
+            lugar= in.nextLine();
+            lugaresNoAlmacenables.add(lugar);
             contador++;
-            if(contador<3){
+            System.out.println("relajado cara de perro");
+            if(contador>=3){
                 do{
                     try{
                         System.out.println("¿Desea agregr otro lugar?");
@@ -76,11 +73,11 @@ public class MedicamentoAmbiente extends Medicamento {
     @Override
     public void mostrarInformacion(String nombre){
         super.mostrarInformacion(nombre);
-        int cantidadDeLugares = lugaresNoAlmacenables.length;
-        System.out.println("Los lugares en los que no se puede almacenar ");
-        for(int i=0; i<=cantidadDeLugares-1; i++){    
-            System.out.println(i+") "+lugaresNoAlmacenables[i]);   
-        };
+        System.out.println("lugar en el que no se puede almacenar el medicamento ");
+        Iterator<String> it = lugaresNoAlmacenables.iterator();
+        while(it.hasNext()){
+            System.out.println(it.next());
+        }
+        
     }
-    
-}
+}    

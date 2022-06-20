@@ -23,9 +23,9 @@ public class Main {
     public static void main(String args[]){
       //Medicamento prueba = new Medicamento();
         Scanner in = new Scanner(System.in);
-        MedicamentoAmbiente ibuprofeno=new MedicamentoAmbiente("6789","ibuprofeno",16,18,3,7,8,11,3);
-        MedicamentoAmbiente brugesic=new MedicamentoAmbiente("12345","brugesic",18,21,4,8,2021,10,2);
-        MedicamentoAmbiente loratadina=new MedicamentoAmbiente("4321","loratadina",22,25,50,12,2025,10,0);
+        MedicamentoAmbiente ibuprofeno=new MedicamentoAmbiente("6789","ibuprofeno",16,18,3,8,2022,11,3);
+        MedicamentoAmbiente brugesic=new MedicamentoAmbiente("12345","brugesic",18,21,4,8,2025,10,2);
+        MedicamentoAmbiente loratadina=new MedicamentoAmbiente("4321","loratadina",22,25,50,12,2028,10,0);
         ArrayList<Medicamento> medicamentos = new ArrayList<>();
         medicamentos.add(ibuprofeno);
         medicamentos.add(brugesic);
@@ -42,7 +42,8 @@ public class Main {
         boolean esta=false;
         String nombre="";
         boolean continuarCiclo=true;
-       
+        Iterator<Medicamento> it = medicamentos.iterator();
+        
         do{
             do{
                 try{
@@ -76,6 +77,7 @@ public class Main {
                
                    do{
                        try{
+                           
                            System.out.println("¿Que medicamento desea verificar? \n");
                            System.out.println("1)Ibuprofeno; 2)Brugesic; 3)Loratadina");
                            numeroDeMedicamento = in.nextInt();  
@@ -143,10 +145,14 @@ public class Main {
                    
                    }while(continuarCiclo);
                break;
-           case 4:               
-               for( i=0; i<=cantidadDeMedicamentos-1; i++){
-                   medicamentos.get(numeroDeMedicamento-1).colocarOferta();
-               }
+           case 4:   
+               it = medicamentos.iterator();
+               while(it.hasNext()){
+                     if(nombre.equals(it.next().getNombre()))
+                         {
+                         it.next().colocarOferta();
+                        }
+                    }
                
              //  break;
            //case 5:
@@ -155,17 +161,19 @@ public class Main {
              case 6:
                  i=0;
                  esta=false;
+                 it = medicamentos.iterator();
                  do{
                     System.out.println("¿Cual es el nombre del medicamento que desea agregar?");
                     nombre = in.nextLine();
                 }while(nombre.equals(""));
                  //Aqui estoy revisando que no exista el medicamento en la lista para podeer introducir otro
-                 while(i<=cantidadDeMedicamentos-1||!esta){
-                     if(nombre.equals(medicamentos.get(i).getNombre())){
+                  
+                 while(it.hasNext()){
+                     if(nombre.equals(it.next().getNombre()))
+                         {
                          esta=true;
-                     };
-                     i++;
-                 }
+                        }
+                    }
                  if(!esta){//si no esta entonces procede a introducir los datos
                      
                      do{                    
@@ -185,10 +193,10 @@ public class Main {
                      }
                  }while(continuarCiclo);
                  if(opcion==1){
-                     xyz.leerDatos(nombre);
+                     abc.leerDatos(nombre);
                      medicamentos.add(xyz);
                  }else{
-                     abc.leerDatos(nombre);
+                     xyz.leerDatos(nombre);
                      medicamentos.add(abc);
                  }
                      
@@ -199,20 +207,22 @@ public class Main {
                  
                break;
              case 7:
+                  it = medicamentos.iterator();
                   i=0;
                   esta=false;
                  do{
                     System.out.println("¿Cual es el nombre del medicamento que desea eliminar?\n");
                     nombre = in.nextLine();
                 }while(nombre.equals(""));
-                 
-                while(i<=cantidadDeMedicamentos-1||!esta){
-                     if(nombre.equals(medicamentos.get(i).getNombre())){
+                
+                 while(it.hasNext()||esta){
+                     if(nombre.equals(it.next().getNombre()))
+                         {
+                            medicamentos.remove(it.next()); 
                          esta=true;
-                         medicamentos.remove(i);
-                     };
-                     i++;
-                 } 
+                        }
+                    }
+               
                  if(!esta){
                      System.out.println("El medicamento no esta en nuestrs almacenes o ya fue elminado!\n");  
                  }

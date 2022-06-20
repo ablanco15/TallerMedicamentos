@@ -57,26 +57,45 @@ public class MedicamentoRefrigerado extends Medicamento{
                continuarCiclo=true;
                in.nextLine();
            };
-       }while(continuarCiclo);
+           if(temperaturaMin>temperaturaMax){
+               System.out.println("La temperatura maxima debe ser mayor a la temperatura minima");
+               continuarCiclo=true;
+           }
+               
+          }while(continuarCiclo);
+             
+                   
        do{
            try{
                System.out.println("¿A que tipo de cadena pertenece este medicamento?\n");
-               System.out.println("|ultracongelada|");
-               System.out.println("|congelada|");
-               System.out.println("|refrigerada|");
+               in.nextLine();
+               System.out.println("ultracongelada");
+               System.out.println("congelada");
+               System.out.println("refrigerada");
                System.out.println();
-               tipoDeCadena = in.nextLine();;
+               tipoDeCadena = in.nextLine();
                continuarCiclo=false;
            }catch(InputMismatchException e1){
                System.out.println("Dato equivocado, vuelve a intentarlo");
                continuarCiclo=true;
                in.nextLine();
-           };
+           }
+           switch(tipoDeCadena){
+               case "ultracongelada":
+                   System.out.println("Confirmado");
+                   break;
+               case "congelada":
+                   System.out.println("Confirmado");
+                   break;
+               case "refrigerada":
+                   System.out.println("Confirmado");
+                   break;   
+                default :   
+                    System.out.println("Opcion no Disponible, vuelve a intentarlo");
+                    continuarCiclo=true;
+                    break;
+           }
            
-           if(tipoDeCadena!="ultracongelada"||tipoDeCadena!="congelada"||tipoDeCadena!="refrigerado");{
-           System.out.println("Opcion no Disponible, vuelve a intentarlo");
-           continuarCiclo=true; 
-            }
        }while(continuarCiclo);
        
     }
