@@ -37,7 +37,7 @@ public abstract class Medicamento {
         this.costoEmpresa = costoEmpresa;
         this.precioPublico = precioPublico;
         this.unidades = unidades;
-        this.fechaVencimiento = fechaVencimiento.of(anoDeVencimiento , mesDeVencimiento);
+        this.fechaVencimiento = fechaVencimiento.of(mesDeVencimiento,anoDeVencimiento);
         this.numeroDeLote = numeroDeLote;
         this.vigencia = vigencia;
     }
@@ -48,7 +48,7 @@ public abstract class Medicamento {
         costoEmpresa = 0;
         precioPublico = 0;
         unidades = 0;
-        fechaVencimiento = YearMonth.of(2025, 6);
+        fechaVencimiento = YearMonth.of(12, 2025);
         numeroDeLote = 0;
         vigencia =1;
    }
@@ -82,12 +82,11 @@ public abstract class Medicamento {
            System.out.println("¿Cual es el año de vencimiento de "+nombre+" ?");
            anoDeVencimiento = in.nextInt();
        }while(anoDeVencimiento<YearMonth.now().getYear());
-       System.out.println("\n");
-       do{
+       System.out.println("\n");do{
            System.out.println("¿Cual es el mes de vencimiento de "+nombre+" ?");
            mesDeVencimiento = in.nextInt();
-       }while( ( (anoDeVencimiento==YearMonth.now().getYear()) && (mesDeVencimiento<YearMonth.now().getMonthValue()) ) || (mesDeVencimiento>12) ||(mesDeVencimiento<0) );
-              fechaVencimiento= YearMonth.of(anoDeVencimiento,mesDeVencimiento);
+       }while((mesDeVencimiento<YearMonth.now().getMonthValue())||(mesDeVencimiento>12));
+       fechaVencimiento= YearMonth.of(mesDeVencimiento,anoDeVencimiento);
        System.out.println("\n");
        do{
            System.out.println("¿Cual es el numero de lote de "+nombre+" ?");
@@ -127,7 +126,8 @@ public abstract class Medicamento {
    }
    
    public void determinarVencido(){
-       if(fechaVencimiento.isAfter(YearMonth.now())){
+       YearMonth.now().compareTo(fechaVencimiento);
+       if(YearMonth.now().compareTo(fechaVencimiento)==1){
            System.out.println("El medicamento "+nombre+" se encuentra vigente");
        }else {
            System.out.println("El medicamento "+nombre+" se encuentra vencido");
@@ -143,24 +143,11 @@ public abstract class Medicamento {
        }
         return existe;
     }
-   public void colocarOferta(){//Coloca una oferta a todo medicamento que este a 3 meses de vencimiento
-       //y si ya esta vencido lo pone como no disponible
-       int oferta=0;
-       if(fechaVencimiento.isAfter(YearMonth.now())) {
-           oferta= fechaVencimiento.getMonthValue()-YearMonth.now().getMonthValue();
-           if(oferta<0){
-               oferta+=12;
-           }
-           if(oferta<=3){
-               precioPublico+= (precioPublico*30)/100;         
-           }
-           
-           
-           }else{
-           vigencia=0;
-       }
-}
-
+   public void colocarOferta(){
+       
+       
+    }  
+   
    public void reponerInventario(){
        if(unidades<=5){
            System.out.println("Quedan "+unidades+" unidades, deberia reponer inventario");
